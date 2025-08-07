@@ -1,9 +1,9 @@
 import Image from 'next/image';
 export default function Title() {
   return (
-    <div className="container pt-12 flex flex-row gap-2 justify-between">
+    <div className="pt-12 flex flex-row justify-between items-center">
       <div className="">
-        <p className="whitespace-nowrap text-4xl text-black text-left font-medium tracking-normal">
+        <p className="whitespace-nowrap text-6xl text-black text-left font-medium tracking-normal">
           Начните заниматься спортом
           <br />и улучшите качество жизни
         </p>

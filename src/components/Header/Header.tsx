@@ -3,7 +3,7 @@ import Button from '@/components/Button/Button';
 
 export default function Header() {
   return (
-    <header className="container flex items-center justify-between bg-white w-full">
+    <header className="container flex items-center justify-between ">
       <div className="flex flex-col gap-2">
         <div className="flex gap-2.5">
           <Image
@@ -27,7 +27,7 @@ export default function Header() {
           Онлайн-тренировки для занятий дома
         </span>
       </div>
-      <Button text="Войти" className="px-5 py-2 h-14 w-[103px] text-lg"/>
+      <Button text="Войти" className="px-5 py-2 h-14 w-[103px] text-lg" />
 
       {/* <button className="bg-[#BCEC30] text-black px-5 py-2 rounded-full hover:bg-[#C6FF00] text-sm font-normal h-14 w-[103px]">
         Войти

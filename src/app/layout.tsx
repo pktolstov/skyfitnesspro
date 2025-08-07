@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable}`}
+        className={`${roboto.variable}, bg-[#fafafa]`}
       >
         {children}
       </body>
