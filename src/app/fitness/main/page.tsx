@@ -16,7 +16,7 @@ export default function Main() {
         <CourseCard
           key={course._id}
           course={course}
-          imageSrc={getImagePath(course.nameEN)}
+          imageSrc={`/img/cards/${getImagePath(course.nameEN)}`}
         />
       ))}
     </div>

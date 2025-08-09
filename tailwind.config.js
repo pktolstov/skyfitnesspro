@@ -5,6 +5,9 @@ module.exports = {
       limeCustom: '#BCEC30',
       limeHover: '#C6FF00',
     },
+    fontSize: {
+      titleToforty: '40px',
+    },
   },
 };
 
