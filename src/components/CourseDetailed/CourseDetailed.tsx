@@ -27,7 +27,6 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
           />
         </div>
 
-        {/* Блок "Подойдет для вас, если" */}
         <div>
           <h2 className="font-semibold text-[40px] text-black pb-10 tracking-normal">
             Подойдет для вас, если:
