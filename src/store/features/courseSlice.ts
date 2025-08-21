@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CourseType } from '@/types/courseType';
+import { WorkoutType } from '@/types/courseType';
 
 export type initialStateType = {
   currentCourse: CourseType | null;
@@ -7,6 +8,7 @@ export type initialStateType = {
   favoriteCourses: CourseType[];
   fetchError: string | null;
   fetchIsLoading: boolean;
+  currentWorkout: WorkoutType | null;
 };
 
 const initialState: initialStateType = {
@@ -15,6 +17,7 @@ const initialState: initialStateType = {
   favoriteCourses: [],
   fetchError: null,
   fetchIsLoading: true,
+  currentWorkout: null,
 };
 
 const courseSlice = createSlice({
@@ -27,13 +30,22 @@ const courseSlice = createSlice({
     setFavoriteCourses: (state, action: PayloadAction<CourseType[]>) => {
       state.favoriteCourses = action.payload;
     },
-    addFavoriteCourses: (state, action: PayloadAction<CourseType>) => {
+    addFavoriteCourse: (state, action: PayloadAction<CourseType>) => {
       state.favoriteCourses = [...state.favoriteCourses, action.payload];
     },
-    removeFavoriteCourses: (state, action: PayloadAction<CourseType>) => {
+    removeFavoriteCourse: (state, action: PayloadAction<CourseType>) => {
       state.favoriteCourses = state.favoriteCourses.filter(
         (course) => course._id !== action.payload._id,
       );
+    },
+    setCurrentWorkout(state, action: PayloadAction<WorkoutType>) {
+      state.currentWorkout = action.payload;
+    },
+    setCurrentCourse(state, action: PayloadAction<CourseType>) {
+      state.currentCourse = action.payload;
+    },
+    clearCurrentWorkout(state) {
+      state.currentWorkout = null;
     },
     setFetchError: (state, action: PayloadAction<string>) => {
       state.fetchError = action.payload;
@@ -47,9 +59,12 @@ const courseSlice = createSlice({
 export const {
   setAllCourses,
   setFavoriteCourses,
-  addFavoriteCourses,
-  removeFavoriteCourses,
+  addFavoriteCourse,
+  removeFavoriteCourse,
   setFetchError,
   setFetchIsLoading,
+  setCurrentWorkout,
+  clearCurrentWorkout,
+  setCurrentCourse,
 } = courseSlice.actions;
 export const courseSliceReducer = courseSlice.reducer;

@@ -1,22 +1,34 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/store/store';
 import CourseCard from '@/components/CourseCard/CourseCard';
 import { getImagePath } from '@/utils/getImagePath';
-import { CourseCardData } from '@/types/courseCard';
+import { CourseCardType } from '@/types/courseCard';
 // import { coursesCards } from '@/constants';
 import Button from '@/components/Button/Button';
 import Title from '@/components/Title/Title';
 import { getCourses } from '@/services/courseApi';
+import { setAllCourses } from '@/store/features/courseSlice';
 
-// const coursesCardsData: CourseCardData[] = coursesCards;
+
 
 export default function Main() {
-  const [courses, setCourses] = useState<CourseCardData[]>([]);
+  const dispatch = useAppDispatch();
+  const [courses, setCourses] = useState<CourseCardType[]>([]);
+
 
   useEffect(() => {
-    getCourses().then((data) => setCourses(data));
-  }, []);
+    getCourses().then((data) => {
+      setCourses(data);
+      dispatch(setAllCourses(data));
+    });
+  }, [dispatch]);
+  // useEffect(() => {
+  //   getCourses().then((data) => setCourses(data));
+  //   dispatch(setAllCourses(courses))
+  
+  // }, []);
 
   return (
     <>

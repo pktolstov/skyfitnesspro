@@ -12,9 +12,3 @@ export default function CoursePage({ params }: { params: { id: string } }) {
 }
 
 
-
-// import CourseDetailed from '@/components/CourseDetailed/CourseDetailed';
-
-// export default function Course() {
-//   return <CourseDetailed />;
-// }

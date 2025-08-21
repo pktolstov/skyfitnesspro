@@ -3,16 +3,14 @@ import { UserType } from '@/types/userType';
 
 interface AuthState {
   user: UserType | null;
-  access: string | '';
-  refresh: string | '';
+  token: string | '';
   username: string | '';
   isAuth: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
-  access: '',
-  refresh: '',
+  token: '',
   username: '',
   isAuth: false,
 };
@@ -23,42 +21,28 @@ const authSlice = createSlice({
   reducers: {
     setUser(state, action: PayloadAction<UserType>) {
       state.user = action.payload;
-      localStorage.setItem('username', action.payload.username);
     },
     setIsAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
-      
     },
     setUserName(state, action: PayloadAction<string>) {
       state.username = action.payload;
       localStorage.setItem('username', action.payload);
     },
     setAccessToken(state, action: PayloadAction<string>) {
-      state.access = action.payload;
-      localStorage.setItem('access', action.payload);
-    },
-    setRefreshToken(state, action: PayloadAction<string>) {
-      state.refresh = action.payload;
-      localStorage.setItem('refresh', action.payload);
+      state.token = action.payload;
+      localStorage.setItem('token', action.payload);
     },
     clearUser(state) {
       state.user = null;
-      state.access = '';
-      state.refresh = '';
+      state.token = '';
       state.username = '';
       localStorage.removeItem('username');
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh');
+      localStorage.removeItem('token');
     },
   },
 });
 
-export const {
-  setUser,
-  clearUser,
-  setAccessToken,
-  setRefreshToken,
-  setUserName,
-  setIsAuth,
-} = authSlice.actions;
+export const { setUser, clearUser, setAccessToken, setUserName, setIsAuth } =
+  authSlice.actions;
 export const authSliceReducer = authSlice.reducer;

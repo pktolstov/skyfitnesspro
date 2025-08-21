@@ -1,4 +1,4 @@
-export interface CourseCardData {
+export interface CourseCardType {
     _id: string;
     nameRU: string;
     nameEN: string;

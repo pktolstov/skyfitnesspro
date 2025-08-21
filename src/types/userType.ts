@@ -1,5 +1,7 @@
 export type UserType = {
   email: string;
-  username: string;
-  _id: number;
+  password: string;
+  _id: string;
+  selectedCourses: [];
+  courseProgress: [];
 };

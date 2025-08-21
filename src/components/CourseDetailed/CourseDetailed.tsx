@@ -1,6 +1,10 @@
+'use client'
+
 import Image from 'next/image';
 import Button from '../Button/Button';
 import { getImagePath } from '@/utils/getImagePath';
+import { useAppSelector, useAppDispatch } from '@/store/store';
+import { openModal } from '@/store/features/modalSlice';
 
 interface CourseDetailedProps {
   course: {
@@ -14,6 +18,9 @@ interface CourseDetailedProps {
 }
 
 export default function CourseDetailed({ course }: CourseDetailedProps) {
+  const { isAuth } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
   return (
     <div>
       <div className="w-full flex flex-col gap-[60px] mx-auto overflow-hidden text-white">
@@ -91,10 +98,29 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
                 <li>помогают противостоять стрессам</li>
               </ul>
               <div className="pb-10 w-full">
-                <Button
+                {isAuth ? (
+                  <Button
+                    text="Добавить курс"
+                    className="px-5 py-2 h-12.5 text-lg w-full"
+                    onClick={() => {
+                      // Логика добавления курса
+                      console.log('Курс добавлен:', course._id);
+                    }}
+                  />
+                ) : (
+                  <Button
+                    text="Войдите, чтобы добавить курс"
+                    className="px-5 py-2 h-12.5 text-lg w-full"
+                    onClick={() => {
+                      // Открыть модалку авторизации
+                      dispatch(openModal('login'));
+                    }}
+                  />
+                )}
+                {/* <Button
                   text="Добавить курс"
                   className="px-5 py-2 h-12.5 text-lg w-full"
-                />
+                /> */}
               </div>
             </div>
 
