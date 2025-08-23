@@ -8,13 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
 import UserModal from '../UserModal/UserModal';
-import {
-  setUser,
-  setIsAuth,
-  setAccessToken,
-  clearUser,
-} from '@/store/features/authSlice';
-import { getUserCourses } from '@/services/auth';
+import { clearUser, setIsAuth } from '@/store/features/authSlice';
 
 export default function Header() {
   const dispatch = useAppDispatch();
@@ -22,26 +16,16 @@ export default function Header() {
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(setAccessToken(token));
-      getUserCourses({ token }).then((user) => {
-        if (user) {
-          dispatch(setUser(user));
-          dispatch(setIsAuth(true));
-        }
-      });
-    }
-  }, [dispatch]);
   const handleProfileClick = () => {
     setIsUserMenuOpen(false);
-    router.push('/fitness/profile'); // замените на свой путь
+    router.push('/fitness/profile');
   };
 
   const handleLogoutClick = () => {
     dispatch(clearUser());
-    router.push('/fitness/main');
+    dispatch(setIsAuth(false))
+    // router.push('/fitness/main');
+    
     setIsUserMenuOpen(false);
   };
 

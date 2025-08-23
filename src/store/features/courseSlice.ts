@@ -5,7 +5,7 @@ import { WorkoutType } from '@/types/courseType';
 export type initialStateType = {
   currentCourse: CourseType | null;
   allCourses: CourseType[];
-  favoriteCourses: CourseType[];
+  favoriteCourses: string[];
   fetchError: string | null;
   fetchIsLoading: boolean;
   currentWorkout: WorkoutType | null;
@@ -27,15 +27,15 @@ const courseSlice = createSlice({
     setAllCourses: (state, action: PayloadAction<CourseType[]>) => {
       state.allCourses = action.payload;
     },
-    setFavoriteCourses: (state, action: PayloadAction<CourseType[]>) => {
+    setFavoriteCourses: (state, action: PayloadAction<string[]>) => {
       state.favoriteCourses = action.payload;
     },
-    addFavoriteCourse: (state, action: PayloadAction<CourseType>) => {
+    addFavoriteCourse: (state, action: PayloadAction<string>) => {
       state.favoriteCourses = [...state.favoriteCourses, action.payload];
     },
-    removeFavoriteCourse: (state, action: PayloadAction<CourseType>) => {
+    removeFavoriteCourse: (state, action: PayloadAction<string>) => {
       state.favoriteCourses = state.favoriteCourses.filter(
-        (course) => course._id !== action.payload._id,
+        (id) => id !== action.payload,
       );
     },
     setCurrentWorkout(state, action: PayloadAction<WorkoutType>) {

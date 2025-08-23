@@ -33,7 +33,7 @@ export default function Main() {
   return (
     <>
       <Title />
-      <div className="flex flex-wrap gap-14  min-h-screen pt-12 w-full">
+      <div className="flex flex-wrap gap-14  min-h-max pt-12 w-full">
         {courses.map((course, index) => (
           <CourseCard
             key={course._id}

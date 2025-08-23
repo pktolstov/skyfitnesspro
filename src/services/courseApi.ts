@@ -65,7 +65,7 @@ export const addUserCourse = async (
   token: tokensType,
 ): Promise<CourseCardType[]> => {
   try {
-    const res = await axios.post(BASE_URL + RoutesApp.addUserCourse, courseId, {
+    const res = await axios.post(BASE_URL + RoutesApp.addUserCourse, {courseId:courseId}, {
       headers: {
         'Content-Type': 'text/plain',
         Authorization: `Bearer ${token.token}`,
@@ -86,6 +86,36 @@ export const addUserCourse = async (
   }
   throw new Error();
 };
+
+
+
+export const getUserCourse = async (
+    token: tokensType,
+  ): Promise<CourseCardType[]> => {
+    try {
+      const res = await axios.get(BASE_URL + RoutesApp.addUserCourse, {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        if (axios.isAxiosError(error) && error.response) {
+          const apiErr = error.response.data as ApiError;
+  
+          throw new Error(
+            apiErr.error ?? apiErr.message ?? 'Ошибка загрузки курсов',
+          );
+        }
+        throw new Error(error.message);
+      }
+    }
+    throw new Error();
+  };
+
+
 
 export const getCourseWorkout = async (
   id: string,
@@ -113,3 +143,5 @@ export const getCourseWorkout = async (
   }
   throw new Error();
 };
+
+
