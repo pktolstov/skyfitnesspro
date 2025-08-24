@@ -11,7 +11,8 @@ interface CardsProps {
   imageSrc: string;
   priority?: boolean;
   isProgress?: boolean;
-  onOpenTrainings?: (course: CourseCardType) => void; // 👈 новый проп
+  progress?: number;
+  onOpenTrainings?: (course: CourseCardType) => void; 
 }
 
 export default function CourseCard({
@@ -19,6 +20,7 @@ export default function CourseCard({
   imageSrc,
   priority = false,
   isProgress = false,
+  progress=20,
   onOpenTrainings,
 }: CardsProps) {
   const handleOpen = (e: React.MouseEvent) => {
@@ -69,12 +71,12 @@ export default function CourseCard({
         </div>
 
         {isProgress && (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-10">
             <div>
               <p className="text-lg font-normal pb-2.5">
-                Прогресс <span>{20}%</span>
+                Прогресс <span>{progress}%</span>
               </p>
-              <ProgressBar progress={20} />
+              <ProgressBar progress={progress} />
             </div>
 
             <Button

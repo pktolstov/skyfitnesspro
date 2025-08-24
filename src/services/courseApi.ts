@@ -1,7 +1,7 @@
 import { BASE_URL, RoutesApp } from '@/constants';
 import axios from 'axios';
 import { CourseCardType } from '@/types/courseCard';
-import { WorkoutType } from '@/types/courseType';
+import { WorkoutType,ApiResponseCourseProgressType  } from '@/types/courseType';
 import { tokensType } from './auth';
 
 type courseUserProp = {
@@ -145,3 +145,31 @@ export const getCourseWorkout = async (
 };
 
 
+///api/fitness/users/me/progress?courseId={courseId}
+
+export const getCourseProgress = async (
+    id: string,
+    token: tokensType,
+  ): Promise<ApiResponseCourseProgressType > => {
+    try {
+      const res = await axios.get(`${BASE_URL}${RoutesApp.getCourseProgress}${id}`, {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: `Bearer ${token.token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        if (axios.isAxiosError(error) && error.response) {
+          const apiErr = error.response.data as ApiError;
+  
+          throw new Error(
+            apiErr.error ?? apiErr.message ?? 'Ошибка загрузки прогресса по курсу',
+          );
+        }
+        throw new Error(error.message);
+      }
+    }
+    throw new Error();
+  };

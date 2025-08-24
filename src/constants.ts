@@ -7,6 +7,7 @@ export const RoutesApp = {
   register: '/auth/register',
   UserCourses: '/users/me',
   addUserCourse: '/users/me/courses',
+  getCourseProgress:'/users/me/progress?courseId='
 };
 
 export const userCoursesData = {

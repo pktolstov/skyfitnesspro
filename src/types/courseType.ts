@@ -27,3 +27,56 @@ export interface WorkoutType {
   video: string;
   exercises?: ExerciseType[];
 }
+
+
+
+
+// export type ProgressDataType = {
+//     courseId: string;
+//     workouts?: {
+//       workoutId: string;
+//       workoutCompleted: boolean;
+//     }[];
+//   };
+
+
+//   export type ProgressDataType = {
+//     [courseId: string]: {
+//       workouts?: {
+//         workoutId: string;
+//         workoutCompleted: boolean;
+//       }[];
+//       progress: number; // процент прогресса
+//     };
+//   };
+
+
+export type CourseProgressEntry = {
+    workouts?: {
+      workoutId: string;
+      workoutCompleted: boolean;
+    }[];
+    progress: number; // процент выполнения всего курса
+  };
+
+// export type CourseProgressEntry = {
+//     workouts?: {
+//       workoutId: string;
+//       workoutCompleted: boolean;
+//     }[];
+//     progress: number // процент выполнения
+//   };
+  
+  export type ProgressDataType = {
+    [courseId: string]: CourseProgressEntry;
+  };
+
+  export type ApiResponseCourseProgressType = {
+    courseId: string;
+    courseCompleted?: boolean;
+    workoutsProgress?: {
+      workoutId: string;
+      workoutCompleted: boolean;
+      progressData: number[];
+    }[];
+  };

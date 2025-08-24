@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CourseType } from '@/types/courseType';
-import { WorkoutType } from '@/types/courseType';
+import { WorkoutType, ProgressDataType, CourseType } from '@/types/courseType';
 
 export type initialStateType = {
   currentCourse: CourseType | null;
@@ -9,6 +8,15 @@ export type initialStateType = {
   fetchError: string | null;
   fetchIsLoading: boolean;
   currentWorkout: WorkoutType | null;
+  courseProgress: {
+    [courseId: string]: {
+      workouts?: {
+        workoutId: string;
+        workoutCompleted: boolean;
+      }[];
+      progress: number;
+    };
+  };
 };
 
 const initialState: initialStateType = {
@@ -18,6 +26,7 @@ const initialState: initialStateType = {
   fetchError: null,
   fetchIsLoading: true,
   currentWorkout: null,
+  courseProgress: {},
 };
 
 const courseSlice = createSlice({
@@ -47,6 +56,33 @@ const courseSlice = createSlice({
     clearCurrentWorkout(state) {
       state.currentWorkout = null;
     },
+
+    setCourseProgress: (
+      state,
+      action: PayloadAction<{
+        courseId: string;
+        workouts?: {
+          workoutId: string;
+          workoutCompleted: boolean;
+        }[];
+        progress: number;
+      }>
+    ) => {
+      state.courseProgress[action.payload.courseId] = {
+        workouts: action.payload.workouts,
+        progress: action.payload.progress,
+      };
+    },
+    // setCourseProgress: (
+    //   state,
+    //   action: PayloadAction<{ courseId: string; progress: number }>,
+    // ) => {
+    //   state.courseProgress[action.payload.courseId] = {
+    //     ...state.courseProgress[action.payload.courseId], // если были workouts — сохраняем их
+    //     progress: action.payload.progress,
+    //   };
+    // },
+
     setFetchError: (state, action: PayloadAction<string>) => {
       state.fetchError = action.payload;
     },
@@ -66,5 +102,6 @@ export const {
   setCurrentWorkout,
   clearCurrentWorkout,
   setCurrentCourse,
+  setCourseProgress,
 } = courseSlice.actions;
 export const courseSliceReducer = courseSlice.reducer;

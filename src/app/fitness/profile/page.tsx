@@ -8,32 +8,31 @@ import { clearUser } from '@/store/features/authSlice';
 import CourseCard from '@/components/CourseCard/CourseCard';
 import TrainingsModal from '@/components/TrainingsModal/TrainingsModal';
 import { getImagePath } from '@/utils/getImagePath';
-import { filterCoursesByIds } from '@/utils/helpers';
+import { filterCoursesByIds, calculateCourseProgress } from '@/utils/helpers';
 import { getCourses } from '@/services/courseApi';
-import { setAllCourses } from '@/store/features/courseSlice';
+import { setAllCourses, setCourseProgress } from '@/store/features/courseSlice';
 import type { CourseCardType } from '@/types/courseCard';
-import { getCourseWorkout } from '@/services/courseApi';
+import { getCourseWorkout, getCourseProgress } from '@/services/courseApi';
 import { toast } from 'react-toastify';
-import { WorkoutType } from '@/types/courseType';
-
+import { WorkoutType, ApiResponseCourseProgressType } from '@/types/courseType';
 
 type TrainingItem = WorkoutType;
 
 export default function UserProfile() {
   const [error, setError] = useState('');
-  const { allCourses, favoriteCourses } = useAppSelector((state) => state.courses);
+  const { allCourses, favoriteCourses, courseProgress } = useAppSelector(
+    (state) => state.courses,
+  );
   const { isAuth, user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (allCourses.length === 0) {
       getCourses().then((data) => dispatch(setAllCourses(data)));
     }
   }, [allCourses.length, dispatch]);
 
-  const selectedCourses = filterCoursesByIds(
-    allCourses,
-   favoriteCourses,
-  );
+  const selectedCourses = filterCoursesByIds(allCourses, favoriteCourses);
 
   const { token } = useAppSelector((state) => state.auth);
   const router = useRouter();
@@ -75,6 +74,84 @@ export default function UserProfile() {
     }
   };
 
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (favoriteCourses.length > 0 && allCourses.length > 0) {
+        for (const courseId of favoriteCourses) {
+          try {
+            const apiProgress: ApiResponseCourseProgressType =
+              await getCourseProgress(courseId, { token });
+
+            const progress = calculateCourseProgress(
+              courseId,
+              allCourses,
+              apiProgress,
+            );
+
+            dispatch(
+              setCourseProgress({
+                courseId,
+                workouts: apiProgress.workoutsProgress?.map((w) => ({
+                  workoutId: w.workoutId,
+                  workoutCompleted: w.workoutCompleted,
+                })),
+                progress,
+              }),
+            );
+
+            // const apiProgress = await getCourseProgress(courseId, { token });
+            // // apiProgress.workouts — массив { workoutId, workoutCompleted }
+
+            // const progress = calculateCourseProgress(courseId, allCourses, apiProgress);
+
+            // dispatch(setCourseProgress({
+            //   courseId,
+            //   workouts: apiProgress.workouts, // сохраняем полный список
+            //   progress,
+            // }));
+          } catch (err) {
+            if (err instanceof Error) {
+              toast.error(err.message);
+              setError(
+                err.message ||
+                  `Ошибка загрузки прогресса для курса ${courseId}`,
+              );
+            }
+
+            // console.error(
+            //   `Ошибка загрузки прогресса для курса ${courseId}`,
+            //   err,
+            // );
+          }
+        }
+      }
+    };
+    fetchProgress();
+  }, [favoriteCourses, allCourses, token, dispatch]);
+  // useEffect(() => {
+  //   const fetchProgress = async () => {
+  //     if (favoriteCourses.length > 0 && allCourses.length > 0) {
+  //       for (const courseId of favoriteCourses) {
+  //         try {
+  //           const apiProgress = await getCourseProgress(courseId, {token});
+  //           const progress = calculateCourseProgress (
+  //             courseId,
+  //             allCourses,
+  //             apiProgress,
+  //           ); // функция вычисления %
+  //           dispatch(setCourseProgress({ courseId, progress }));
+  //         } catch (err) {
+  //           console.error(
+  //             `Ошибка загрузки прогресса для курса ${courseId}`,
+  //             err,
+  //           );
+  //         }
+  //       }
+  //     }
+  //   };
+  //   fetchProgress();
+  // }, [favoriteCourses, allCourses, token, dispatch]);
+
   return (
     <div className="flex flex-col gap-[60px] pt-[60px] pb-64">
       <div>
@@ -112,7 +189,8 @@ export default function UserProfile() {
               imageSrc={`/img/cards/${getImagePath(course.nameEN)}`}
               priority={index === 0}
               isProgress
-              onOpenTrainings={handleOpenTrainings} // 👈 передаём обработчик
+              progress={courseProgress[course._id]?.progress ?? 0}
+              onOpenTrainings={handleOpenTrainings} // передаём обработчик
             />
           ))}
         </div>
@@ -128,4 +206,3 @@ export default function UserProfile() {
     </div>
   );
 }
-
