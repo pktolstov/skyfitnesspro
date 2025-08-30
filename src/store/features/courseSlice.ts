@@ -13,6 +13,7 @@ export type initialStateType = {
       workouts?: {
         workoutId: string;
         workoutCompleted: boolean;
+        progressData?: number[];
       }[];
       progress: number;
     };
@@ -57,6 +58,7 @@ const courseSlice = createSlice({
       state.currentWorkout = null;
     },
 
+
     setCourseProgress: (
       state,
       action: PayloadAction<{
@@ -64,6 +66,7 @@ const courseSlice = createSlice({
         workouts?: {
           workoutId: string;
           workoutCompleted: boolean;
+          progressData?: number[];
         }[];
         progress: number;
       }>
@@ -75,13 +78,21 @@ const courseSlice = createSlice({
     },
     // setCourseProgress: (
     //   state,
-    //   action: PayloadAction<{ courseId: string; progress: number }>,
+    //   action: PayloadAction<{
+    //     courseId: string;
+    //     workouts?: {
+    //       workoutId: string;
+    //       workoutCompleted: boolean;
+    //     }[];
+    //     progress: number;
+    //   }>
     // ) => {
     //   state.courseProgress[action.payload.courseId] = {
-    //     ...state.courseProgress[action.payload.courseId], // если были workouts — сохраняем их
+    //     workouts: action.payload.workouts,
     //     progress: action.payload.progress,
     //   };
     // },
+
 
     setFetchError: (state, action: PayloadAction<string>) => {
       state.fetchError = action.payload;

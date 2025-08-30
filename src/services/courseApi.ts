@@ -1,7 +1,7 @@
 import { BASE_URL, RoutesApp } from '@/constants';
 import axios from 'axios';
 import { CourseCardType } from '@/types/courseCard';
-import { WorkoutType,ApiResponseCourseProgressType  } from '@/types/courseType';
+import { WorkoutType, ApiResponseCourseProgressType,ApiResponseWorkoutProgressType } from '@/types/courseType';
 import { tokensType } from './auth';
 
 type courseUserProp = {
@@ -30,34 +30,28 @@ export const getCourses = async (): Promise<CourseCardType[]> => {
   throw new Error();
 };
 
-export const getCourseById = async (
-    id: string,
-   
-  ): Promise<CourseCardType> => {
-    try {
-      const res = await axios.get(`${BASE_URL}/courses/${id}`, {
-        headers: {
-          'Content-Type': 'text/plain',
-         
-        },
-      });
-      return res.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        if (axios.isAxiosError(error) && error.response) {
-          const apiErr = error.response.data as ApiError;
-  
-          throw new Error(
-            apiErr.error ?? apiErr.message ?? 'Ошибка загрузки списка тренировок',
-          );
-        }
-        throw new Error(error.message);
+export const getCourseById = async (id: string): Promise<CourseCardType> => {
+  try {
+    const res = await axios.get(`${BASE_URL}/courses/${id}`, {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+    return res.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const apiErr = error.response.data as ApiError;
+
+        throw new Error(
+          apiErr.error ?? apiErr.message ?? 'Ошибка загрузки списка тренировок',
+        );
       }
+      throw new Error(error.message);
     }
-    throw new Error();
-  };
-
-
+  }
+  throw new Error();
+};
 
 //   Проверить! API не работает- функция не проверена
 export const addUserCourse = async (
@@ -65,7 +59,37 @@ export const addUserCourse = async (
   token: tokensType,
 ): Promise<CourseCardType[]> => {
   try {
-    const res = await axios.post(BASE_URL + RoutesApp.addUserCourse, {courseId:courseId}, {
+    const res = await axios.post(
+      BASE_URL + RoutesApp.addUserCourse,
+      { courseId: courseId },
+      {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: `Bearer ${token.token}`,
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const apiErr = error.response.data as ApiError;
+
+        throw new Error(
+          apiErr.error ?? apiErr.message ?? 'Ошибка загрузки курсов',
+        );
+      }
+      throw new Error(error.message);
+    }
+  }
+  throw new Error();
+};
+
+export const getUserCourse = async (
+  token: tokensType,
+): Promise<CourseCardType[]> => {
+  try {
+    const res = await axios.get(BASE_URL + RoutesApp.addUserCourse, {
       headers: {
         'Content-Type': 'text/plain',
         Authorization: `Bearer ${token.token}`,
@@ -86,36 +110,6 @@ export const addUserCourse = async (
   }
   throw new Error();
 };
-
-
-
-export const getUserCourse = async (
-    token: tokensType,
-  ): Promise<CourseCardType[]> => {
-    try {
-      const res = await axios.get(BASE_URL + RoutesApp.addUserCourse, {
-        headers: {
-          'Content-Type': 'text/plain',
-          Authorization: `Bearer ${token.token}`,
-        },
-      });
-      return res.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        if (axios.isAxiosError(error) && error.response) {
-          const apiErr = error.response.data as ApiError;
-  
-          throw new Error(
-            apiErr.error ?? apiErr.message ?? 'Ошибка загрузки курсов',
-          );
-        }
-        throw new Error(error.message);
-      }
-    }
-    throw new Error();
-  };
-
-
 
 export const getCourseWorkout = async (
   id: string,
@@ -144,32 +138,125 @@ export const getCourseWorkout = async (
   throw new Error();
 };
 
-
-///api/fitness/users/me/progress?courseId={courseId}
-
 export const getCourseProgress = async (
-    id: string,
-    token: tokensType,
-  ): Promise<ApiResponseCourseProgressType > => {
-    try {
-      const res = await axios.get(`${BASE_URL}${RoutesApp.getCourseProgress}${id}`, {
+  id: string,
+  token: tokensType,
+): Promise<ApiResponseCourseProgressType> => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}${RoutesApp.getCourseProgress}${id}`,
+      {
         headers: {
           'Content-Type': 'text/plain',
           Authorization: `Bearer ${token.token}`,
         },
-      });
-      return res.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        if (axios.isAxiosError(error) && error.response) {
-          const apiErr = error.response.data as ApiError;
-  
-          throw new Error(
-            apiErr.error ?? apiErr.message ?? 'Ошибка загрузки прогресса по курсу',
-          );
-        }
-        throw new Error(error.message);
+      },
+    );
+    return res.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const apiErr = error.response.data as ApiError;
+
+        throw new Error(
+          apiErr.error ??
+            apiErr.message ??
+            'Ошибка загрузки прогресса по курсу',
+        );
       }
+      throw new Error(error.message);
     }
-    throw new Error();
-  };
+  }
+  throw new Error();
+};
+
+export const getWorkoutProgress = async (
+  courseId: string,
+  workoutId: string,
+  token: string,
+): Promise<ApiResponseWorkoutProgressType> => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}${RoutesApp.getCourseProgress}${courseId}&workoutId=${workoutId}`,
+      
+      {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const apiErr = error.response.data as ApiError;
+
+        throw new Error(
+          apiErr.error ??
+            apiErr.message ??
+            'Ошибка загрузки прогресса тренировки',
+        );
+      }
+      throw new Error(error.message);
+    }
+  }
+  throw new Error();
+};
+
+export const updateWorkoutProgress = async (
+  courseId: string,
+  workoutId: string,
+  data: { progressData: number[] },
+  token: string,
+): Promise<ApiResponseWorkoutProgressType> => {
+  try {
+    const res = await axios.patch(
+      `${BASE_URL}/courses/${courseId}/workouts/${workoutId}`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const apiErr = error.response.data as ApiError;
+
+        throw new Error(
+          apiErr.error ??
+            apiErr.message ??
+            'Ошибка обновления прогресса тренировки',
+        );
+      }
+      throw new Error(error.message);
+    }
+  }
+  throw new Error();
+};
+
+//   export async function updateWorkoutProgress(
+//     courseId: string,
+//     workoutId: string,
+//     body: { progressData: number[] },
+//     token: string
+//   ) {
+//     const res = await fetch(`/api/fitness/courses/${courseId}/workouts/${workoutId}`, {
+//       method: 'PATCH',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: JSON.stringify(body),
+//     });
+
+//     if (!res.ok) {
+//       throw new Error(`Ошибка обновления прогресса: ${res.statusText}`);
+//     }
+
+//     return res.json();
+//   }

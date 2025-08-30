@@ -94,6 +94,7 @@ export default function UserProfile() {
                 workouts: apiProgress.workoutsProgress?.map((w) => ({
                   workoutId: w.workoutId,
                   workoutCompleted: w.workoutCompleted,
+                  progressData:w.progressData,
                 })),
                 progress,
               }),
@@ -128,30 +129,6 @@ export default function UserProfile() {
     };
     fetchProgress();
   }, [favoriteCourses, allCourses, token, dispatch]);
-  // useEffect(() => {
-  //   const fetchProgress = async () => {
-  //     if (favoriteCourses.length > 0 && allCourses.length > 0) {
-  //       for (const courseId of favoriteCourses) {
-  //         try {
-  //           const apiProgress = await getCourseProgress(courseId, {token});
-  //           const progress = calculateCourseProgress (
-  //             courseId,
-  //             allCourses,
-  //             apiProgress,
-  //           ); // функция вычисления %
-  //           dispatch(setCourseProgress({ courseId, progress }));
-  //         } catch (err) {
-  //           console.error(
-  //             `Ошибка загрузки прогресса для курса ${courseId}`,
-  //             err,
-  //           );
-  //         }
-  //       }
-  //     }
-  //   };
-  //   fetchProgress();
-  // }, [favoriteCourses, allCourses, token, dispatch]);
-
   return (
     <div className="flex flex-col gap-[60px] pt-[60px] pb-64">
       <div>

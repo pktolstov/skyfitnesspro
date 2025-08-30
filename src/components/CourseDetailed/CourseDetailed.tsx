@@ -109,9 +109,9 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
         </div>
 
         {/* Призыв к действию */}
-        <div className="pb-12.5 pt-7">
+        <div className="pb-12.5 pt-7 ">
           <div className="bg-white text-black flex flex-col md:flex-row items-center gap-6 rounded-[30px] relative overflow-visible shadow-[0px_4px_67px_-12px_#00000021]">
-            <div className="flex-1 z-10 max-w-md flex flex-col gap-7">
+            <div className="z-10 max-w-lg flex flex-col gap-7 pt-10 pl-10">
               <h3 className="text-6xl font-medium">
                 Начните путь к новому телу
               </h3>
@@ -146,7 +146,7 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
               </div>
             </div>
 
-            <div className="absolute right-0 bottom-5 w-[487px] h-[543px] translate-y-10 -translate-x-0">
+            <div className="absolute right-0 bottom-5 w-[587px] h-[643px] translate-y-12 translate-x-0">
               <Image
                 src="/img/courses/athlete.svg"
                 alt="Тренировка"

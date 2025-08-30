@@ -28,9 +28,6 @@ export interface WorkoutType {
   exercises?: ExerciseType[];
 }
 
-
-
-
 // export type ProgressDataType = {
 //     courseId: string;
 //     workouts?: {
@@ -38,7 +35,6 @@ export interface WorkoutType {
 //       workoutCompleted: boolean;
 //     }[];
 //   };
-
 
 //   export type ProgressDataType = {
 //     [courseId: string]: {
@@ -50,14 +46,14 @@ export interface WorkoutType {
 //     };
 //   };
 
-
 export type CourseProgressEntry = {
-    workouts?: {
-      workoutId: string;
-      workoutCompleted: boolean;
-    }[];
-    progress: number; // процент выполнения всего курса
-  };
+  workouts?: {
+    workoutId: string;
+    workoutCompleted: boolean;
+    progressData?: number[];
+  }[];
+  progress: number; // процент выполнения всего курса
+};
 
 // export type CourseProgressEntry = {
 //     workouts?: {
@@ -66,17 +62,23 @@ export type CourseProgressEntry = {
 //     }[];
 //     progress: number // процент выполнения
 //   };
-  
-  export type ProgressDataType = {
-    [courseId: string]: CourseProgressEntry;
-  };
 
-  export type ApiResponseCourseProgressType = {
-    courseId: string;
-    courseCompleted?: boolean;
-    workoutsProgress?: {
-      workoutId: string;
-      workoutCompleted: boolean;
-      progressData: number[];
-    }[];
-  };
+export type ProgressDataType = {
+  [courseId: string]: CourseProgressEntry;
+};
+
+export type ApiResponseCourseProgressType = {
+  courseId: string;
+  courseCompleted?: boolean;
+  workoutsProgress?: {
+    workoutId: string;
+    workoutCompleted: boolean;
+    progressData: number[];
+  }[];
+};
+
+export type ApiResponseWorkoutProgressType = {
+  workoutId: string;
+  workoutCompleted?: boolean;
+  progressData: number[];
+};
