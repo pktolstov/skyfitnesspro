@@ -76,6 +76,38 @@ const courseSlice = createSlice({
         progress: action.payload.progress,
       };
     },
+    setWorkoutProgress: (
+      state,
+      action: PayloadAction<{
+        courseId: string;
+        workoutId: string;
+        progressData: number[];
+      }>
+    ) => {
+      const { courseId, workoutId, progressData } = action.payload;
+    
+      // Создаём объект курса, если его нет
+      if (!state.courseProgress) state.courseProgress = {};
+      if (!state.courseProgress[courseId]) {
+        state.courseProgress[courseId] = { workouts: [], progress: 0 }; // ❗ добавляем progress
+      }
+    
+      const existingWorkout = state.courseProgress[courseId].workouts?.find(
+        (w) => w.workoutId === workoutId
+      );
+    
+      if (existingWorkout) {
+        existingWorkout.progressData = progressData;
+      } else {
+        state.courseProgress[courseId].workouts?.push({
+          workoutId,
+          progressData,
+          workoutCompleted: false, // обязательное поле
+        });
+      }
+    },
+    
+    
     // setCourseProgress: (
     //   state,
     //   action: PayloadAction<{
@@ -114,5 +146,6 @@ export const {
   clearCurrentWorkout,
   setCurrentCourse,
   setCourseProgress,
+  setWorkoutProgress,
 } = courseSlice.actions;
 export const courseSliceReducer = courseSlice.reducer;

@@ -79,12 +79,15 @@ export default function TrainingsModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-[30px] p-6 w-[360px] shadow-lg"
+        className="bg-white rounded-[30px] w-[450px] p-10 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-[24px] font-semibold mb-6">{title}</h2>
+        <div className='flex items-center justify-center pb-11'>
+        <h2 className="text-[32px] font-normal">{'Выберите тренировку'}</h2>
+        </div>
+       
 
-        <div className="max-h-[300px] overflow-y-auto pr-2">
+        <div className="max-h-[350px] overflow-y-auto pr-5 custom-scroll">
           {loading && (
             <div className="py-6 text-center text-gray-500">
               Загружаем тренировки…
@@ -120,8 +123,8 @@ export default function TrainingsModal({
                   )}
 
                   <div>
-                    <p className="text-lg font-semibold">{trainingTitle}</p>
-                    <span className="text-sm text-gray-500">
+                    <p className="text-2xl font-normal">{trainingTitle}</p>
+                    <span className="text-[16px] text-black">
                       {trainingSubtitle || `Тренировка ${idx + 1}`}
                     </span>
                   </div>
