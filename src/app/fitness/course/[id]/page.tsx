@@ -1,12 +1,16 @@
 import { coursesCards } from '@/constants';
 import CourseDetailed from '@/components/CourseDetailed/CourseDetailed';
+import React from 'react';
 
 interface Params {
   id: string;
 }
 
-export default async function CoursePage({ params }: { params: Params }) {
-  // Если данные будут из API, можно сделать await fetch
+interface Props {
+  params: Params;
+}
+
+export default async function CoursePage({ params }: Props): Promise<React.ReactNode> {
   const course = coursesCards.find((c) => c._id === params.id);
 
   if (!course) {
@@ -15,5 +19,3 @@ export default async function CoursePage({ params }: { params: Params }) {
 
   return <CourseDetailed course={course} />;
 }
-
-
