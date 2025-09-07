@@ -1,5 +1,5 @@
 'use client';
-
+export const runtime = 'edge'; // для деплоя на cloudfare.com
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { useParams } from 'next/navigation';
