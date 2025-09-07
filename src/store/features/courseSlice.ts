@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { WorkoutType, ProgressDataType, CourseType } from '@/types/courseType';
+import { WorkoutType, CourseType } from '@/types/courseType';
 
 export type initialStateType = {
   currentCourse: CourseType | null;
@@ -85,10 +85,10 @@ const courseSlice = createSlice({
     ) => {
       const { courseId, workoutId, progressData } = action.payload;
 
-      // Создаём объект курса, если его нет
+      
       if (!state.courseProgress) state.courseProgress = {};
       if (!state.courseProgress[courseId]) {
-        state.courseProgress[courseId] = { workouts: [], progress: 0 }; // ❗ добавляем progress
+        state.courseProgress[courseId] = { workouts: [], progress: 0 }; 
       }
 
       const existingWorkout = state.courseProgress[courseId].workouts?.find(
@@ -101,7 +101,7 @@ const courseSlice = createSlice({
         state.courseProgress[courseId].workouts?.push({
           workoutId,
           progressData,
-          workoutCompleted: false, // обязательное поле
+          workoutCompleted: false,
         });
       }
     },

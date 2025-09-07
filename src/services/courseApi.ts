@@ -53,7 +53,7 @@ export const getCourseById = async (id: string): Promise<CourseCardType> => {
   throw new Error();
 };
 
-//   Проверить! API не работает- функция не проверена
+
 export const addUserCourse = async (
   { courseId }: courseUserProp,
   token: tokensType,
@@ -271,25 +271,3 @@ export const updateWorkoutProgress = async (
   }
   throw new Error();
 };
-
-//   export async function updateWorkoutProgress(
-//     courseId: string,
-//     workoutId: string,
-//     body: { progressData: number[] },
-//     token: string
-//   ) {
-//     const res = await fetch(`/api/fitness/courses/${courseId}/workouts/${workoutId}`, {
-//       method: 'PATCH',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify(body),
-//     });
-
-//     if (!res.ok) {
-//       throw new Error(`Ошибка обновления прогресса: ${res.statusText}`);
-//     }
-
-//     return res.json();
-//   }

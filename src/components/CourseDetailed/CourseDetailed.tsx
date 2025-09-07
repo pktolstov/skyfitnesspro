@@ -86,7 +86,6 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
           </div>
         </div>
 
-        {/* Блок "Направления" */}
         <div className="flex flex-col gap-10">
           <p className="font-semibold lg:text-[40px] sm:text-[24px] text-[24px] text-black tracking-normal">
             Направления
@@ -107,8 +106,6 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
             ))}
           </div>
         </div>
-
-        {/* Призыв к действию */}
 
         <div className="pb-12.5 pt-7 ">
           <div className="absolute w-[350px] h-[337px] right-0 lg:bottom-5 lg:w-[587px] lg:h-[643px] lg:translate-y-70 lg:z-10 xl:translate-y-100 translate-y-[-250px] translate-x-0 z-0">
@@ -143,15 +140,10 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
                     text="Войдите, чтобы добавить курс"
                     className="px-5 py-2 h-12.5 text-lg w-full"
                     onClick={() => {
-                      // Открыть модалку авторизации
                       dispatch(openModal('login'));
                     }}
                   />
                 )}
-                {/* <Button
-                  text="Добавить курс"
-                  className="px-5 py-2 h-12.5 text-lg w-full"
-                /> */}
               </div>
             </div>
           </div>

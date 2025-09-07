@@ -1,5 +1,3 @@
-import { User2Icon } from 'lucide-react';
-
 export const BASE_URL = 'https://wedev-api.sky.pro/api/fitness';
 
 export const RoutesApp = {
@@ -7,14 +5,14 @@ export const RoutesApp = {
   register: '/auth/register',
   UserCourses: '/users/me',
   addUserCourse: '/users/me/courses',
-  getCourseProgress:'/users/me/progress?courseId='
+  getCourseProgress: '/users/me/progress?courseId=',
 };
 
 export const userCoursesData = {
   _id: '689995ac6a3ad98367f801bd',
   email: 'paul.smith@ya.hoo',
   password: '$2b$10$HRIcIHwXQe6RS2c8hB.9g.0w9ft0sPjY3NboYz42BinBC85QoSvNS',
-  selectedCourses: ['6i67sm','ab1c3f' ],
+  selectedCourses: ['6i67sm', 'ab1c3f'],
   courseProgress: [],
   createdAt: '2025-08-11T07:03:08.841Z',
   updatedAt: '2025-08-11T07:03:08.841Z',

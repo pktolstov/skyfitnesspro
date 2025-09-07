@@ -45,7 +45,7 @@ export default function Workout() {
         )
       : undefined,
   );
-  // 1. Загружаем токен
+
   useEffect(() => {
     if (!token) {
       const savedToken = localStorage.getItem('token');
@@ -55,7 +55,6 @@ export default function Workout() {
     }
   }, [token, dispatch]);
 
-  // 2. Загружаем тренировку
   useEffect(() => {
     if (!workoutId || !token) return;
 
@@ -95,7 +94,6 @@ export default function Workout() {
       } catch (err) {
         if (err instanceof Error) {
           toast.error(err.message);
-          // setError(err.message || 'Что-то пошло не так');
         }
       }
     };
@@ -103,11 +101,10 @@ export default function Workout() {
     fetchWorkoutProgress();
   }, [currentCourse, workoutId, token, dispatch]);
 
-  // 3. Обработка открытия попапа
   const handleOpen = () => {
     const existingProgress = workoutProgressData?.progressData || [];
-    setInitialProgress(existingProgress); // <-- ключевой момент
-    setProgressInputs([]); // чтобы заново отследить только изменённые поля
+    setInitialProgress(existingProgress);
+    setProgressInputs([]);
     setShowPopup(true);
   };
   const handleInputChange = (index: number, value: string) => {
@@ -116,7 +113,6 @@ export default function Workout() {
     setProgressInputs(updated);
   };
 
-  // 5. Отправка данных
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!currentCourse?._id || !workoutId) return;
@@ -125,7 +121,7 @@ export default function Workout() {
         const inputValue = progressInputs[i];
         return inputValue !== undefined
           ? inputValue
-          : (initialProgress[i] ?? 0); // <-- теперь будет браться текущий прогресс
+          : (initialProgress[i] ?? 0);
       }) ?? [];
 
     try {
@@ -147,20 +143,23 @@ export default function Workout() {
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message);
-        // setError(err.message || 'Что-то пошло не так');
       }
     }
   };
   const hasProgress = workoutProgressData?.progressData?.some(
     (value) => value > 0,
   );
-  if (loading) return <div className='text-3xl text-center'>Загружаем тренировку…</div>;
-  if (!workout || !currentCourse) return <div className='text-3xl text-center'>Нет данных о тренировке</div>;
+  if (loading)
+    return <div className="text-3xl text-center">Загружаем тренировку…</div>;
+  if (!workout || !currentCourse)
+    return <div className="text-3xl text-center">Нет данных о тренировке</div>;
 
   return (
     <>
       <div className="flex w-full flex-col gap-10 pt-[60px]">
-        <h2 className="text-2xl md:text-6xl font-medium">{currentCourse.nameRU}</h2>
+        <h2 className="text-2xl md:text-6xl font-medium">
+          {currentCourse.nameRU}
+        </h2>
         <div className="w-full aspect-video">
           <iframe
             src={workout.video}
@@ -207,7 +206,6 @@ export default function Workout() {
         </div>
       </div>
 
-      {/* POPUP */}
       {showPopup && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
           <div
@@ -243,11 +241,11 @@ export default function Workout() {
           </div>
         </div>
       )}
-      {/* POPUP Ваш прогресс засчитан */}
+
       {showPopupResult && (
         <div
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]"
-          onClick={() => setShowPopupResult(false)} // клик на фон закрывает
+          onClick={() => setShowPopupResult(false)}
         >
           <PopUpApiResult onClose={() => setShowPopupResult(false)} />
         </div>
@@ -255,4 +253,3 @@ export default function Workout() {
     </>
   );
 }
-

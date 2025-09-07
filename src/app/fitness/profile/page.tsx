@@ -63,7 +63,7 @@ export default function UserProfile() {
           return workout;
         }),
       );
-      //описать обработку ошибок корректно
+
       setTrainings(data);
     } catch (err) {
       if (err instanceof Error) {
@@ -101,17 +101,6 @@ export default function UserProfile() {
                 progress,
               }),
             );
-
-            // const apiProgress = await getCourseProgress(courseId, { token });
-            // // apiProgress.workouts — массив { workoutId, workoutCompleted }
-
-            // const progress = calculateCourseProgress(courseId, allCourses, apiProgress);
-
-            // dispatch(setCourseProgress({
-            //   courseId,
-            //   workouts: apiProgress.workouts, // сохраняем полный список
-            //   progress,
-            // }));
           } catch (err) {
             if (err instanceof Error) {
               toast.error(err.message);
@@ -120,11 +109,6 @@ export default function UserProfile() {
                   `Ошибка загрузки прогресса для курса ${courseId}`,
               );
             }
-
-            // console.error(
-            //   `Ошибка загрузки прогресса для курса ${courseId}`,
-            //   err,
-            // );
           }
         }
       }
@@ -147,7 +131,9 @@ export default function UserProfile() {
               />
             </div>
             <div className="flex flex-col justify-center items-center sm:justify-top items-left">
-              <p className="pb-7.5 text-2xl md:text-[32px] font-medium">Пользователь:</p>
+              <p className="pb-7.5 text-2xl md:text-[32px] font-medium">
+                Пользователь:
+              </p>
               <span className="lg:text-lg test-[16px] font-normal pb-11">
                 Логин: {user?.email}
               </span>
@@ -172,7 +158,7 @@ export default function UserProfile() {
               priority={index === 0}
               isProgress
               progress={courseProgress[course._id]?.progress ?? 0}
-              onOpenTrainings={handleOpenTrainings} // передаём обработчик
+              onOpenTrainings={handleOpenTrainings}
             />
           ))}
         </div>
@@ -187,12 +173,14 @@ export default function UserProfile() {
         courseProgress={
           modalCourseId
             ? courseProgress[modalCourseId]?.workouts?.reduce(
-                (acc, w) => ({ ...acc, [w.workoutId]: { workoutCompleted: w.workoutCompleted } }),
-                {}
+                (acc, w) => ({
+                  ...acc,
+                  [w.workoutId]: { workoutCompleted: w.workoutCompleted },
+                }),
+                {},
               )
             : {}
         }
-        
       />
     </div>
   );

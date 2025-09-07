@@ -74,7 +74,6 @@ export async function signUp(userData: {
 }
 
 
-//переделать на метод get и может быть fetch
 export const getUserCourses = (token: tokensType): Promise<authUserReturn> => {
   return axios
   .get(`${BASE_URL}${RoutesApp.UserCourses}`, {

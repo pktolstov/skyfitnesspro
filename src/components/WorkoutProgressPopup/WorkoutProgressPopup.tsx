@@ -17,7 +17,9 @@ export default function WorkoutProgressPopup({
   initialProgress,
   onSubmit,
 }: WorkoutProgressPopupProps) {
-  const [progressInputs, setProgressInputs] = useState<(number | undefined)[]>([]);
+  const [progressInputs, setProgressInputs] = useState<(number | undefined)[]>(
+    [],
+  );
 
   const handleInputChange = (index: number, value: string) => {
     const updated = [...progressInputs];
@@ -28,7 +30,9 @@ export default function WorkoutProgressPopup({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const mergedProgress = exercises.map((_, i) =>
-      progressInputs[i] !== undefined ? progressInputs[i]! : (initialProgress[i] ?? 0),
+      progressInputs[i] !== undefined
+        ? progressInputs[i]!
+        : (initialProgress[i] ?? 0),
     );
     onSubmit(mergedProgress);
   };
@@ -66,79 +70,3 @@ export default function WorkoutProgressPopup({
     </div>
   );
 }
-
-
-// 'use client';
-
-// import React from 'react';
-// import Input from '@/components/Input/Iinput';
-// import Button from '@/components/Button/Button';
-// import { ExerciseType } from '@/types/courseType';
-
-// interface PopUpSaveProgressProps {
-//   workout: {
-//     exercises?: ExerciseType[];
-//     name: string;
-//   };
-//   initialProgress: number[];
-//   progressInputs: (number | undefined)[];
-//   setProgressInputs: React.Dispatch<React.SetStateAction<(number | undefined)[]>>;
-//   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-//   handleInputChange: (index: number, value: string) => void;
-//   onClose: () => void;
-// }
-
-// const PopUpSaveProgress: React.FC<PopUpSaveProgressProps> = ({
-//   workout,
-//   initialProgress,
-//   progressInputs,
-//   setProgressInputs,
-//   handleSubmit,
-//   handleInputChange,
-//   onClose,
-// }) => {
-//   return (
-//     <div
-//       className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]"
-//       onClick={onClose} // клик на фон закрывает
-//     >
-//       <div
-//         className="bg-white rounded-[30px] p-10 w-[400px] max-h-[525px] shadow-lg flex flex-col"
-//         onClick={(e) => e.stopPropagation()} // клик внутри не закрывает
-//       >
-//         <h2 className="text-[32px] pb-12 font-normal">{'Мой прогресс'}</h2>
-//         <form
-//           onSubmit={handleSubmit}
-//           className="flex flex-col flex-1 overflow-y-auto pr-5 custom-scroll"
-//         >
-//           <div className="flex-1 flex-col overflow-y-auto pr-5 custom-scroll">
-//             <div className="flex flex-col gap-5 pb-6">
-//               {workout.exercises?.map((ex, i) => (
-//                 <div key={i} className="flex flex-col">
-//                   <label className="text-lg font-normal leading-[110%] pb-2.5">
-//                     Сколько раз вы сделали {ex.name}?
-//                   </label>
-//                   <Input
-//                     type="number"
-//                     placeholder={(initialProgress[i] ?? 0).toString()}
-//                     min="0"
-//                     value={progressInputs[i] ?? ''}
-//                     onChange={(e) => handleInputChange(i, e.target.value)}
-//                   />
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-
-//           <Button
-//             type="submit"
-//             text="Сохранить"
-//             className="w-full mt-4"
-//           />
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PopUpSaveProgress;

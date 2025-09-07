@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/Button/Button';
-import Header from '@/components/Header/Header';
+
 
 export default function NotFound() {
   return (
     <>
 
     <div className="flex flex-col gap-[100px]items-center justify-center min-h-screen">
-    {/* <Header /> */}
+
       <div className="flex flex-col items-center gap-8 text-center">
         <h1 className="text-9xl font-bold">404</h1>
 

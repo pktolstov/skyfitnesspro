@@ -28,40 +28,14 @@ export interface WorkoutType {
   exercises?: ExerciseType[];
 }
 
-// export type ProgressDataType = {
-//     courseId: string;
-//     workouts?: {
-//       workoutId: string;
-//       workoutCompleted: boolean;
-//     }[];
-//   };
-
-//   export type ProgressDataType = {
-//     [courseId: string]: {
-//       workouts?: {
-//         workoutId: string;
-//         workoutCompleted: boolean;
-//       }[];
-//       progress: number; // процент прогресса
-//     };
-//   };
-
 export type CourseProgressEntry = {
   workouts?: {
     workoutId: string;
     workoutCompleted: boolean;
     progressData?: number[];
   }[];
-  progress: number; // процент выполнения всего курса
+  progress: number;
 };
-
-// export type CourseProgressEntry = {
-//     workouts?: {
-//       workoutId: string;
-//       workoutCompleted: boolean;
-//     }[];
-//     progress: number // процент выполнения
-//   };
 
 export type ProgressDataType = {
   [courseId: string]: CourseProgressEntry;
