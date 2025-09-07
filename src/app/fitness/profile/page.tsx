@@ -20,10 +20,11 @@ type TrainingItem = WorkoutType;
 
 export default function UserProfile() {
   const [error, setError] = useState('');
+  const [modalCourseId, setModalCourseId] = useState<string | null>(null);
   const { allCourses, favoriteCourses, courseProgress } = useAppSelector(
     (state) => state.courses,
   );
-  const { isAuth, user } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -52,6 +53,7 @@ export default function UserProfile() {
     setModalTitle(course.nameRU);
     setIsModalOpen(true);
     setModalLoading(true);
+    setModalCourseId(course._id);
 
     try {
       const uniqueIds = Array.from(new Set(course.workouts ?? []));
@@ -94,7 +96,7 @@ export default function UserProfile() {
                 workouts: apiProgress.workoutsProgress?.map((w) => ({
                   workoutId: w.workoutId,
                   workoutCompleted: w.workoutCompleted,
-                  progressData:w.progressData,
+                  progressData: w.progressData,
                 })),
                 progress,
               }),
@@ -132,23 +134,26 @@ export default function UserProfile() {
   return (
     <div className="flex flex-col gap-[60px] pt-[60px] pb-64">
       <div>
-        <h2 className="font-semibold text-[40px] pb-10">Профиль</h2>
+        <h2 className="font-semibold text-2xl md:text-[40px] pb-10">Профиль</h2>
         <div className="bg-white rounded-[30px]">
-          <div className="p-7.5 flex gap-8">
-            <Image
-              src="/img/user/avatar.svg"
-              alt="Avatar"
-              width={197}
-              height={197}
-            />
-            <div className="flex flex-col justify-top items-left">
-              <p className="pb-7.5 text-[32px] font-medium">Пользователь:</p>
-              <span className="text-lg font-normal pb-11">
+          <div className="p-7.5 flex flex-col sm:flex-row gap-8">
+            <div className="w-48 md:w-56 aspect-[197/197] relative mx-auto sm:mx-0">
+              <Image
+                src="/img/user/avatar.svg"
+                alt="Avatar"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="flex flex-col justify-center items-center sm:justify-top items-left">
+              <p className="pb-7.5 text-2xl md:text-[32px] font-medium">Пользователь:</p>
+              <span className="lg:text-lg test-[16px] font-normal pb-11">
                 Логин: {user?.email}
               </span>
               <Button
                 text="Выйти"
-                className="bg-white hover:bg-[#F7F7F7] border"
+                className="bg-white hover:bg-[#F7F7F7] border w-full"
                 onClick={handleLogoutClick}
               />
             </div>
@@ -157,7 +162,7 @@ export default function UserProfile() {
       </div>
 
       <div>
-        <h2 className="font-semibold text-[40px]">Мои курсы</h2>
+        <h2 className="font-semibold text-2xl md:text-[40px]">Мои курсы</h2>
         <div className="pt-10 flex flex-wrap gap-14 w-full">
           {selectedCourses.map((course, index) => (
             <CourseCard
@@ -179,6 +184,15 @@ export default function UserProfile() {
         title={modalTitle}
         trainings={trainings}
         loading={modalLoading}
+        courseProgress={
+          modalCourseId
+            ? courseProgress[modalCourseId]?.workouts?.reduce(
+                (acc, w) => ({ ...acc, [w.workoutId]: { workoutCompleted: w.workoutCompleted } }),
+                {}
+              )
+            : {}
+        }
+        
       />
     </div>
   );

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 type PopUpApiResultProps = {
   onClose: () => void;
-  autoCloseDelay?: number; // задержка в мс
+  autoCloseDelay?: number; 
 };
 
 export default function PopUpApiResult({ onClose, autoCloseDelay = 3000 }: PopUpApiResultProps) {

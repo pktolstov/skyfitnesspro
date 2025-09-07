@@ -140,6 +140,7 @@ export default function AuthModal() {
             width={183}
             height={28}
             alt="SkyFitness"
+            className='h-auto w-auto'
           />
         </div>
 

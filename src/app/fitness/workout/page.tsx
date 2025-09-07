@@ -160,7 +160,7 @@ export default function Workout() {
   return (
     <>
       <div className="flex w-full flex-col gap-10 pt-[60px]">
-        <h2 className="text-6xl font-medium">{currentCourse.nameRU}</h2>
+        <h2 className="text-2xl md:text-6xl font-medium">{currentCourse.nameRU}</h2>
         <div className="w-full aspect-video">
           <iframe
             src={workout.video}
@@ -171,7 +171,7 @@ export default function Workout() {
           />
         </div>
         <div className="p-10 bg-white rounded-[30px]">
-          <h3 className="text-[32px] font-normal leading-normal">
+          <h3 className="text-[32px] font-normal sm:leading-normal leading-none">
             Упражнения {workout.name}
           </h3>
           <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -193,14 +193,14 @@ export default function Workout() {
               );
             })}
           </div>
-          <div className="pt-10">
+          <div className="pt-10 mx-auto">
             <Button
               text={
                 hasProgress
                   ? 'Обновить свой прогресс'
                   : 'Заполнить свой прогресс'
               }
-              className="h-12.5 w-80 text-lg"
+              className="h-12.5 sm:w-80 text-lg w-full"
               onClick={handleOpen}
             />
           </div>
@@ -256,216 +256,3 @@ export default function Workout() {
   );
 }
 
-// 'use client';
-
-// import { toast } from 'react-toastify';
-// import { useSearchParams } from 'next/navigation';
-// import { useEffect, useState } from 'react';
-// import { useAppDispatch, useAppSelector } from '@/store/store';
-// import {
-//   getCourseWorkout,
-//   getCourses,
-//   updateWorkoutProgress,
-//   getWorkoutProgress,
-// } from '@/services/courseApi';
-// import {
-//   setCurrentWorkout,
-//   setCurrentCourse,
-//   setWorkoutProgress,
-// } from '@/store/features/courseSlice';
-// import { setAccessToken } from '@/store/features/authSlice';
-// import ProgressBar from '@/components/ProgressBar/ProgressBar';
-// import { cutWorkoutName } from '@/utils/helpers';
-// import Button from '@/components/Button/Button';
-// import Input from '@/components/Input/Iinput';
-// import {
-//   ApiResponseWorkoutProgressType,
-//   ExerciseType,
-// } from '@/types/courseType';
-// import PopUpApiResult from '@/components/PopUpApiResult/PopUpApiResult';
-// import PopUpSaveProgress from '@/components/PopUpSaveProgress/PopUpSaveProgress';
-
-// export default function Workout() {
-//   const dispatch = useAppDispatch();
-//   const workout = useAppSelector((state) => state.courses.currentWorkout);
-//   const currentCourse = useAppSelector((state) => state.courses.currentCourse);
-//   const token = useAppSelector((state) => state.auth.token);
-//   const params = useSearchParams();
-//   const workoutId = params.get('workoutId');
-
-//   const [loading, setLoading] = useState(false);
-//   const [showPopup, setShowPopup] = useState(false);
-//   const [progressInputs, setProgressInputs] = useState<(number | undefined)[]>([]);
-//   const [initialProgress, setInitialProgress] = useState<number[]>([]);
-//   const [showPopupResult, setShowPopupResult] = useState(false);
-
-//   const workoutProgressData = useAppSelector((state) =>
-//     currentCourse?._id
-//       ? state.courses.courseProgress?.[currentCourse._id]?.workouts?.find(
-//           (w) => w.workoutId === workoutId,
-//         )
-//       : undefined,
-//   );
-
-//   // Загрузка токена
-//   useEffect(() => {
-//     if (!token) {
-//       const savedToken = localStorage.getItem('token');
-//       if (savedToken) dispatch(setAccessToken(savedToken));
-//     }
-//   }, [token, dispatch]);
-
-//   // Загрузка тренировки и курса
-//   useEffect(() => {
-//     if (!workoutId || !token) return;
-
-//     setLoading(true);
-
-//     getCourseWorkout(workoutId, { token })
-//       .then((workout) => {
-//         dispatch(setCurrentWorkout(workout));
-//         return getCourses().then((courses) => {
-//           const course = courses.find((c) => c.workouts.includes(workoutId));
-//           if (course) dispatch(setCurrentCourse(course));
-//         });
-//       })
-//       .catch(console.error)
-//       .finally(() => setLoading(false));
-//   }, [workoutId, token, dispatch]);
-
-//   // Загрузка прогресса из API
-//   useEffect(() => {
-//     const fetchProgress = async () => {
-//       if (!currentCourse?._id || !workoutId || !token) return;
-//       try {
-//         const data: ApiResponseWorkoutProgressType = await getWorkoutProgress(
-//           currentCourse._id,
-//           workoutId,
-//           token,
-//         );
-//         dispatch(
-//           setWorkoutProgress({
-//             courseId: currentCourse._id,
-//             workoutId,
-//             progressData: data.progressData ?? [],
-//           }),
-//         );
-//         setInitialProgress(data.progressData ?? []);
-//       } catch (err) {
-//         if (err instanceof Error) toast.error(err.message);
-//       }
-//     };
-//     fetchProgress();
-//   }, [currentCourse, workoutId, token, dispatch]);
-
-//   const handleOpen = () => {
-//     setProgressInputs([...initialProgress]); // подставляем текущий прогресс
-//     setShowPopup(true);
-//   };
-
-//   const handleInputChange = (index: number, value: string) => {
-//     const updated = [...progressInputs];
-//     updated[index] = value === '' ? undefined : Math.max(0, Number(value));
-//     setProgressInputs(updated);
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (!currentCourse?._id || !workoutId) return;
-
-//     const mergedProgress =
-//       workout?.exercises?.map((ex: ExerciseType, i: number) => {
-//         const inputValue = progressInputs[i];
-//         return inputValue !== undefined ? inputValue : initialProgress[i] ?? 0;
-//       }) ?? [];
-
-//     try {
-//       await updateWorkoutProgress(
-//         currentCourse._id,
-//         workoutId,
-//         { progressData: mergedProgress },
-//         token,
-//       );
-//       dispatch(
-//         setWorkoutProgress({
-//           courseId: currentCourse._id,
-//           workoutId,
-//           progressData: mergedProgress,
-//         }),
-//       );
-//       setShowPopup(false);
-//       setShowPopupResult(true);
-//     } catch (err) {
-//       if (err instanceof Error) toast.error(err.message);
-//     }
-//   };
-
-//   const hasProgress = workoutProgressData?.progressData?.some((value) => value > 0);
-
-//   if (loading) return <div>Загружаем тренировку…</div>;
-//   if (!workout || !currentCourse) return <div>Нет данных о тренировке</div>;
-
-//   return (
-//     <>
-//       <div className="flex w-full flex-col gap-10 pt-[60px]">
-//         <h2 className="text-6xl font-medium">{currentCourse.nameRU}</h2>
-//         <div className="w-full aspect-video">
-//           <iframe
-//             src={workout.video}
-//             width="100%"
-//             height="100%"
-//             className="rounded-[30px]"
-//             loading="lazy"
-//           />
-//         </div>
-//         <div className="p-10 bg-white rounded-[30px]">
-//           <h3 className="text-[32px] font-normal leading-normal">
-//             Упражнения {workout.name}
-//           </h3>
-//           <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-//             {workout.exercises?.map((ex, i) => {
-//               const exerciseProgress =
-//                 workoutProgressData?.progressData?.[i] ?? 0;
-//               const progress = Math.min(
-//                 100,
-//                 Math.round((exerciseProgress / ex.quantity) * 100),
-//               );
-
-//               return (
-//                 <div key={i}>
-//                   <div className="pb-2.5 text-lg font-normal">
-//                     {`${cutWorkoutName(ex.name)} ${progress}%`}
-//                   </div>
-//                   <ProgressBar progress={progress} />
-//                 </div>
-//               );
-//             })}
-//           </div>
-//           <div className="pt-10">
-//             <Button
-//               text={hasProgress ? "Обновить свой прогресс" : "Заполнить свой прогресс"}
-//               className="h-12.5 w-80 text-lg"
-//               onClick={handleOpen}
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       {showPopup && (
-//         <PopUpSaveProgress
-//           workout={workout}
-//           initialProgress={initialProgress}
-//           progressInputs={progressInputs}
-//           setProgressInputs={setProgressInputs}
-//           handleSubmit={handleSubmit}
-//           handleInputChange={handleInputChange}
-//           onClose={() => setShowPopup(false)}
-//         />
-//       )}
-
-//       {showPopupResult && (
-//         <PopUpApiResult onClose={() => setShowPopupResult(false)} />
-//       )}
-//     </>
-//   );
-// }

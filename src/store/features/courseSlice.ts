@@ -58,7 +58,6 @@ const courseSlice = createSlice({
       state.currentWorkout = null;
     },
 
-
     setCourseProgress: (
       state,
       action: PayloadAction<{
@@ -69,7 +68,7 @@ const courseSlice = createSlice({
           progressData?: number[];
         }[];
         progress: number;
-      }>
+      }>,
     ) => {
       state.courseProgress[action.payload.courseId] = {
         workouts: action.payload.workouts,
@@ -82,20 +81,20 @@ const courseSlice = createSlice({
         courseId: string;
         workoutId: string;
         progressData: number[];
-      }>
+      }>,
     ) => {
       const { courseId, workoutId, progressData } = action.payload;
-    
+
       // Создаём объект курса, если его нет
       if (!state.courseProgress) state.courseProgress = {};
       if (!state.courseProgress[courseId]) {
         state.courseProgress[courseId] = { workouts: [], progress: 0 }; // ❗ добавляем progress
       }
-    
+
       const existingWorkout = state.courseProgress[courseId].workouts?.find(
-        (w) => w.workoutId === workoutId
+        (w) => w.workoutId === workoutId,
       );
-    
+
       if (existingWorkout) {
         existingWorkout.progressData = progressData;
       } else {
@@ -106,25 +105,6 @@ const courseSlice = createSlice({
         });
       }
     },
-    
-    
-    // setCourseProgress: (
-    //   state,
-    //   action: PayloadAction<{
-    //     courseId: string;
-    //     workouts?: {
-    //       workoutId: string;
-    //       workoutCompleted: boolean;
-    //     }[];
-    //     progress: number;
-    //   }>
-    // ) => {
-    //   state.courseProgress[action.payload.courseId] = {
-    //     workouts: action.payload.workouts,
-    //     progress: action.payload.progress,
-    //   };
-    // },
-
 
     setFetchError: (state, action: PayloadAction<string>) => {
       state.fetchError = action.payload;

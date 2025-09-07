@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode,useEffect } from 'react';
+import { ReactNode,useEffect, useState } from 'react';
 import { useAppDispatch } from '@/store/store';
 import Header from '@/components/Header/Header';
 import AuthModal from '@/components/AuthModal/AuthModal';
@@ -15,7 +15,7 @@ interface CourseCardProps {
 
 export default function FitnessLayout({ children }: CourseCardProps) {
   const dispatch = useAppDispatch();
-
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,13 +26,14 @@ export default function FitnessLayout({ children }: CourseCardProps) {
           dispatch(setUser(user));
           dispatch(setIsAuth(true));
           dispatch(setFavoriteCourses(user.selectedCourses))
-        }
-      });
-    }
+        } 
+      })
+      .finally(() => setIsLoading(false)) ;
+    } else setIsLoading(false)
   }, [dispatch]);
   return (
     <div className="container mx-auto pt-12 px-10 w-full max-h-[100%]">
-      <Header />
+      <Header isLoading={isLoading}/>
       {children}
       <AuthModal />
       <ToastContainer autoClose={1500} />
