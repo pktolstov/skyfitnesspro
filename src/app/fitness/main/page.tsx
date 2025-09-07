@@ -5,9 +5,10 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import CourseCard from '@/components/CourseCard/CourseCard';
 import { getImagePath } from '@/utils/getImagePath';
 import { CourseCardType } from '@/types/courseCard';
+// import { coursesCards } from '@/constants';
 import Button from '@/components/Button/Button';
 import Title from '@/components/Title/Title';
-import { getCourses} from '@/services/courseApi';
+import { getCourses, getUserCourse } from '@/services/courseApi';
 import {
   setAllCourses,
   setFavoriteCourses,
@@ -21,7 +22,7 @@ export default function Main() {
   const [courses, setCourses] = useState<CourseCardType[]>([]);
 
   useEffect(() => {
-  
+    
     getCourses().then((data) => {
       setCourses(data);
       dispatch(setAllCourses(data));
