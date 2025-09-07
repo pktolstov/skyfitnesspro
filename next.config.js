@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-      runtime: 'edge', // Опционально, если хочешь Edge Functions
-    },
     reactStrictMode: true,
     swcMinify: true,
     images: {
