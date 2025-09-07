@@ -70,50 +70,55 @@ export default function Header({ isLoading = false }: HeaderProps) {
         </div>
       </Link>
 
-      {isAuth && user ? (
-        <div className="relative" ref={menuRef}>
-          <div
-            className="flex gap-4 cursor-pointer"
-            onClick={() => setIsUserMenuOpen((prev) => !prev)}
-          >
-            <Image
-              src="/img/user/profile.svg"
-              alt="profile.svg"
-              width={50}
-              height={50}
-            />
-            <div className="flex justify-center items-center gap-3">
-              <p className="hidden md:block font-normal text-2xl">
-                {user.email}
-              </p>
-              <Image
-                src="/img/user/expand.svg"
-                width={15}
-                height={15}
-                alt="^"
-                className={`pt-1 transition-transform duration-300 w-auto h-auto ${
-                  isUserMenuOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </div>
-          </div>
+      {/* Если идет загрузка, не отображаем кнопку и имя пользователя */}
+      {!isLoading && (
+        <>
+          {isAuth && user ? (
+            <div className="relative" ref={menuRef}>
+              <div
+                className="flex gap-4 cursor-pointer"
+                onClick={() => setIsUserMenuOpen((prev) => !prev)}
+              >
+                <Image
+                  src="/img/user/profile.svg"
+                  alt="profile.svg"
+                  width={50}
+                  height={50}
+                />
+                <div className="flex justify-center items-center gap-3">
+                  <p className="hidden md:block font-normal text-2xl">
+                    {user.email}
+                  </p>
+                  <Image
+                    src="/img/user/expand.svg"
+                    width={15}
+                    height={15}
+                    alt="^"
+                    className={`pt-1 transition-transform duration-300 w-auto h-auto ${
+                      isUserMenuOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </div>
+              </div>
 
-          {isUserMenuOpen && (
-            <div className="absolute top-16 right-0 z-50 animate-fadeIn">
-              <UserModal
-                onProfileClick={handleProfileClick}
-                onLogoutClick={handleLogoutClick}
-                email={user.email}
-              />
+              {isUserMenuOpen && (
+                <div className="absolute top-16 right-0 z-50 animate-fadeIn">
+                  <UserModal
+                    onProfileClick={handleProfileClick}
+                    onLogoutClick={handleLogoutClick}
+                    email={user.email}
+                  />
+                </div>
+              )}
             </div>
+          ) : (
+            <Button
+              text="Войти"
+              className="px-5 py-2 h-14 w-[103px] text-lg"
+              onClick={() => dispatch(openModal('login'))}
+            />
           )}
-        </div>
-      ) : (
-        <Button
-          text="Войти"
-          className="px-5 py-2 h-14 w-[103px] text-lg"
-          onClick={() => dispatch(openModal('login'))}
-        />
+        </>
       )}
     </header>
   );

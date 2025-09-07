@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 import Button from '../Button/Button';
 import { getImagePath } from '@/utils/getImagePath';
@@ -24,13 +23,10 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
   const { isAuth, token } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
-  const [loading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (!token) return;
-    setIsLoading(true);
-    setError(null);
+
     try {
       await addUserCourse({ courseId: course._id }, { token });
 
@@ -39,10 +35,8 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message);
-        setError(err.message || 'Ошибка добавления курса');
       }
     } finally {
-      setIsLoading(false);
     }
   };
 

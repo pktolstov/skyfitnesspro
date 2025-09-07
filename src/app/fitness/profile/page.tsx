@@ -19,7 +19,7 @@ import { WorkoutType, ApiResponseCourseProgressType } from '@/types/courseType';
 type TrainingItem = WorkoutType;
 
 export default function UserProfile() {
-  const [error, setError] = useState('');
+
   const [modalCourseId, setModalCourseId] = useState<string | null>(null);
   const { allCourses, favoriteCourses, courseProgress } = useAppSelector(
     (state) => state.courses,
@@ -68,7 +68,7 @@ export default function UserProfile() {
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message);
-        setError(err.message || 'Что-то пошло не так');
+       
         setTrainings([]);
       }
     } finally {
@@ -104,10 +104,7 @@ export default function UserProfile() {
           } catch (err) {
             if (err instanceof Error) {
               toast.error(err.message);
-              setError(
-                err.message ||
-                  `Ошибка загрузки прогресса для курса ${courseId}`,
-              );
+              
             }
           }
         }

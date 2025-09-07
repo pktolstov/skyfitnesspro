@@ -1,7 +1,11 @@
 import { coursesCards } from '@/constants';
 import CourseDetailed from '@/components/CourseDetailed/CourseDetailed';
 
-export default function CoursePage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: { id: string };
+}
+
+export default function CoursePage({ params }: PageProps) {
   const course = coursesCards.find((c) => c._id === params.id);
 
   if (!course) {
@@ -10,5 +14,3 @@ export default function CoursePage({ params }: { params: { id: string } }) {
 
   return <CourseDetailed course={course} />;
 }
-
-
