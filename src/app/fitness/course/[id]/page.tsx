@@ -1,11 +1,12 @@
 import { coursesCards } from '@/constants';
 import CourseDetailed from '@/components/CourseDetailed/CourseDetailed';
 
-interface PageProps {
-  params: { id: string };
+interface Params {
+  id: string;
 }
 
-export default function CoursePage({ params }: PageProps) {
+export default async function CoursePage({ params }: { params: Params }) {
+  // Если данные будут из API, можно сделать await fetch
   const course = coursesCards.find((c) => c._id === params.id);
 
   if (!course) {
