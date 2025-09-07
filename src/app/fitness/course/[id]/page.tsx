@@ -14,3 +14,5 @@ export default function CoursePage({ params }: PageProps) {
 
   return <CourseDetailed course={course} />;
 }
+
+
