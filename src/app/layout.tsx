@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import ReduxProvider from '../store/ReduxProvider';
 import './globals.css';
+import { Suspense } from 'react';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ReduxProvider>
-        <body className={`${roboto.variable}, bg-[#fafafa]`}>{children}</body>
+        <Suspense>
+          <body className={`${roboto.variable}, bg-[#fafafa]`}>{children}</body>
+        </Suspense>
       </ReduxProvider>
     </html>
   );
