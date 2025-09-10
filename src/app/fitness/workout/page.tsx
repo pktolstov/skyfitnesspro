@@ -185,7 +185,8 @@ export default function Workout() {
               return (
                 <div key={i}>
                   <div className="pb-2.5 text-lg font-normal">
-                    {`${cutWorkoutName(ex.name)} ${progress}%`}
+                    {`${cutWorkoutName(ex.name)} (${ex.quantity} раз) ${progress}%`}
+                    
                   </div>
                   <ProgressBar progress={progress} />
                 </div>
@@ -223,6 +224,7 @@ export default function Workout() {
                     <div key={i} className="flex flex-col">
                       <label className="text-lg font-normal leading-[110%] pb-2.5">
                         Сколько раз вы сделали {cutWorkoutName(ex.name, 35)}?
+                        <span className="text-gray-500">(из {ex.quantity})</span>
                       </label>
                       <Input
                         type="number"
