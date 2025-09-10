@@ -78,12 +78,12 @@ export default function CourseCard({
       href={`/fitness/course/${course._id}`}
       className="bg-white rounded-[30px] max-h-max shadow-[0_20px_50px_rgba(0,0,0,0.1)] w-full sm:w-[360px] transform transition-transform duration-300 hover:scale-[1.03] gap-5"
     >
-      <div className="relative w-full h-[325px] rounded-[30px] overflow-hidden">
+      <div className="relative w-full h-[325px] rounded-[30px] ">
         <Image
           src={imageSrc}
           alt={course.nameRU}
           fill
-          className="object-cover"
+          className="object-cover rounded-[30px]"
           priority={priority}
         />
         <div
