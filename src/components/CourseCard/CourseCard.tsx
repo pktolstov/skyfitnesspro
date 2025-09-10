@@ -76,9 +76,9 @@ export default function CourseCard({
   return (
     <Link
       href={`/fitness/course/${course._id}`}
-      className="bg-white rounded-[30px] max-h-max shadow-[0_20px_50px_rgba(0,0,0,0.1)] w-[360px]  transform transition-transform duration-300 hover:scale-[1.03] gap-5"
+      className="bg-white rounded-[30px] max-h-max shadow-[0_20px_50px_rgba(0,0,0,0.1)] w-full sm:w-[360px] transform transition-transform duration-300 hover:scale-[1.03] gap-5"
     >
-      <div className="relative w-full h-[325px] rounded-[30px]">
+      <div className="relative w-full h-[325px] rounded-[30px] overflow-hidden">
         <Image
           src={imageSrc}
           alt={course.nameRU}
@@ -93,7 +93,7 @@ export default function CourseCard({
           <span className="text-2xl font-bold text-gray-500 leading-none">
             {icon}
           </span>
-          <div className="absolute top-12 right-1 translate-x-1/2 bg-white text-black border border-black rounded-md px-3 py-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+          <div className="absolute top-12 right-1 translate-x-1/2 bg-white text-black border border-black rounded-md px-3 py-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 hidden sm:block">
             {isAdded ? 'Удалить курс' : 'Добавить курс'}
           </div>
         </div>
@@ -130,7 +130,13 @@ export default function CourseCard({
             </div>
 
             <Button
-              text="Продолжить"
+              text={
+                progress === 0
+                  ? 'Начать'
+                  : progress === 100
+                  ? 'Начать заново'
+                  : 'Продолжить'
+              }
               className="h-12.5 w-full text-lg"
               onClick={handleOpen}
             />

@@ -45,7 +45,7 @@ export default function Header({ isLoading = false }: HeaderProps) {
   }, []);
 
   return (
-    <header className="container px-4 md:px-0 flex items-center justify-between relative">
+    <header className="container md:px-0 flex items-center justify-between relative">
       <Link href={'/fitness/main'}>
         <div className="flex flex-col gap-2">
           <div className="flex gap-2.5">
@@ -114,7 +114,7 @@ export default function Header({ isLoading = false }: HeaderProps) {
           ) : (
             <Button
               text="Войти"
-              className="px-5 py-2 h-14 w-[103px] text-lg"
+              className="sm:px-5 py-2 h-9 sm:h-14 w-[83px] sm:w-[103px] sm:text-lg text-[15px] text-center "
               onClick={() => dispatch(openModal('login'))}
             />
           )}

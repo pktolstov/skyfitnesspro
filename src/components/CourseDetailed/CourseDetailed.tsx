@@ -110,8 +110,8 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
               className="object-contain"
             />
           </div>
-          <div className="bg-white text-black flex flex-col md:flex-row items-center gap-6 rounded-[30px] relative overflow-visible shadow-[0px_4px_67px_-12px_#00000021] z-0">
-            <div className="z-20 max-w-lg flex flex-col gap-7 pt-10 pl-10">
+          <div className="bg-white p-7.5 text-black flex flex-col md:flex-row items-center gap-6 rounded-[30px] relative overflow-visible shadow-[0px_4px_67px_-12px_#00000021] z-0">
+            <div className="z-20 max-w-lg flex flex-col gap-7 pt-10 sm:pl-10 ">
               <h3 className="md:text-6xl sm:text-4xl text-[32px] font-medium leading-none z-20">
                 Начните путь к новому телу
               </h3>
@@ -132,7 +132,7 @@ export default function CourseDetailed({ course }: CourseDetailedProps) {
                 ) : (
                   <Button
                     text="Войдите, чтобы добавить курс"
-                    className="px-5 py-2 h-12.5 text-lg w-full"
+                    className="px-5 py-2 h-12.5 text-sm sm:text-lg w-full"
                     onClick={() => {
                       dispatch(openModal('login'));
                     }}
