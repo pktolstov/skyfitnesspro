@@ -1,37 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SkyFitnessPro
 
-## Getting Started
+SkyFitnessPro — это веб-приложение для занятий спортом, позволяющее пользователям выбирать и проходить курсы тренировок, отслеживать прогресс и улучшать качество жизни.
 
-First, run the development server:
+## Содержание
+
+- [Описание проекта](#описание-проекта)
+- [Функционал](#функционал)
+- [Технологии](#технологии)
+- [Установка и запуск](#установка-и-запуск)
+- [Страницы приложения](#страницы-приложения)
+- [Деплой](#деплой)
+- [Тестирование](#тестирование)
+
+---
+
+## Описание проекта
+
+SkyFitnessPro разрабатывается как дипломный проект, включающий полный цикл — от верстки до деплоя. Пользователи смогут:
+
+- Просматривать доступные курсы тренировок.
+- Авторизовываться и регистрироваться.
+- Добавлять курсы в свой профиль.
+- Просматривать прогресс прохождения тренировок.
+- Запускать тренировки с видеоуроками и заданиями.
+
+---
+
+## Функционал
+
+- **Главная страница курсов** — отображает все курсы, доступные в базе данных, независимо от авторизации.
+- **Авторизация и регистрация** — возможность входа в систему или создания нового аккаунта с валидацией данных.
+- **Страница отдельного курса** — детальная информация о курсе. Неавторизованным пользователям предлагается авторизация.
+- **Профиль пользователя** — просмотр личных данных и приобретённых курсов.
+- **Страница тренировки** — доступ к материалам уроков, заданиям и прогрессу.
+
+---
+
+## Технологии
+
+- **Фреймворк:** React.js или Next.js (используется Next.js)
+- **Язык:** TypeScript
+- **Стилизация:** Tailwind CSS (опционально)
+- **Деплой:** Cloudflare Pages
+- **Код-стайл:** ESLint, Prettier
+- **Тестирование:** Jest + React Testing Library
+
+---
+
+## Установка и запуск
+
+### Клонирование репозитория
+
+```bash
+git clone https://github.com/username/skyfitnesspro.git
+cd skyfitnesspro
+
+```
+
+---
+
+## Установка зависимостей
+
+npm install
+
+# или
+
+yarn install
+
+## Запуск в режиме разработки
 
 ```bash
 npm run dev
-# or
+# или
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Приложение будет доступно по адресу: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Сборка для продакшена
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# skyfitnesspro
+```bash
+npm run build
+npm start
+```
